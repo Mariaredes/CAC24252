@@ -1,7 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
+  const baseURL = "https://cac-ecommerce.vercel.app/"
+
   const toggleMenu = () => {
     const navLinks = document.getElementById("navLinks");
-    navLinks.style.display = navLinks.style.display === "flex" ? "none" : "flex";
+    navLinks.style.display =
+      navLinks.style.display === "flex" ? "none" : "flex";
   };
 
   document.querySelector(".menu-icon").addEventListener("click", toggleMenu);
@@ -56,15 +59,17 @@ document.addEventListener("DOMContentLoaded", function () {
   // Productos
   const loadProducts = async () => {
     try {
-      const response = await fetch("productos.json");
+      const response = await fetch(`${baseURL}productos`);
       const data = await response.json();
 
-      const contenedorProductos = document.getElementById("contenedor-productos");
+      const contenedorProductos = document.getElementById(
+        "contenedor-productos"
+      );
       data.forEach((producto) => {
         const productoHTML = `
           <article class="col-lg-4 col-md-6 col-sm-12 mb-5 text-center articulo">
             <div>
-              <img src="${producto.imagen}" alt="${producto.nombre}" class="img-producto">
+              <img src="https://tienda.personal.com.ar/images/320/webp/i_Phone_13_Pro_256_GB_Graphite_73f3e06d1c.png" alt="${producto.nombre}" class="img-producto">
               <div class="card-body">
                 <h2>${producto.nombre}</h2>
                 <p class="fs-4">${producto.precio} €</p>
@@ -81,6 +86,22 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
+  const btnAccountRender = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const btnAccountText = document.getElementById("btn-account-text");
+    const btnAccount = document.getElementById("btn-account");
+    if (user) {
+      btnAccountText.innerText = `${user.usuario.nombre}`
+      btnAccount.innerHTML = `
+        <a id="btn-logout" class="nav-link">Cerrar sesión</a>`;
+    } else {
+      btnAccountText.innerText = "Ingresar";
+      btnAccount.innerHTML = `
+        <a href="/login.html" class="nav-link">Iniciar sesión</a>
+        <a href="/register.html" class="nav-link">Registrarse</a>`;
+    }
+  }
+  btnAccountRender();
   loadProducts();
 });
 
@@ -90,6 +111,6 @@ const mostrarProducto = (nombre, descripcion) => {
   document.getElementById("modal").style.display = "flex";
 };
 
-document.getElementById("btn-cerrar").onclick = () => {
+  document.getElementById("btn-cerrar").onclick = () => {
   document.getElementById("modal").style.display = "none";
 };

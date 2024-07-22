@@ -5,9 +5,10 @@
 
 INTEGRANTES:
 
-* Maria Aredes | earedes80@gmail.com
+* Maria Emilse Aredes | earedes80@gmail.com
 * Nicolas Cartellone | nicolas.cartellone@gmail.com
 * Gian Franco Montero | gianmonteroavalos@gmail.com
+* Marcos Pablo Martin | martinmarcospablo@gmail.com
 
 # Backend
 
@@ -43,3 +44,18 @@ Para que node pueda leer el archivo .env se debe tener la version 20 o superior.
 Este script por detras corre el siguete comando: nodemon --env-file .env src src/index.js
 
 ¡Listo! El backend estará funcionando en el puerto especificado y conectado a la base de datos configurada.
+
+## Acceso al Proyecto Deployado
+
+El proyecto ya está deployado y accesible a través de las siguientes URLs:
+
+- **Backend**: [https://cac-ecommerce.vercel.app/](https://cac-ecommerce.vercel.app/)
+- **Frontend**: [https://cac-ecommerce.netlify.app/](https://cac-ecommerce.netlify.app/)
+
+### Iniciar Sesión como Administrador
+
+Para iniciar sesión en el frontend como administrador, utiliza las siguientes credenciales:
+
+- **Email**: admin@admin.com
+- **Contraseña**: admin123
+

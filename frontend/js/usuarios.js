@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
   const btnUsuarios = document.getElementById("btn-usuarios");
   const newTable = document.getElementById("admin-table");
+  const baseURL = "https://cac-ecommerce.vercel.app/"
+  const localURL = "http://localhost:8080/"
 
   // Función para obtener y mostrar usuarios
   const getUsers = async () => {
@@ -28,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
     newTable.appendChild(table);
 
     // Obtener usuarios
+<<<<<<< HEAD
     const response = await fetch("http://localhost:3000/usuarios");
     const users = await response.json();
 
@@ -36,6 +39,14 @@ document.addEventListener("DOMContentLoaded", function () {
       const roleNameResponse = await fetch(
         `http://localhost:3000/roles/${user.id_rol}`
       );
+=======
+    const responseUsuarios = await fetch(`${baseURL}usuarios`);
+    const users = await responseUsuarios.json();
+
+    // Iterar sobre cada usuario y agregarlos como filas a la tabla
+    users.forEach(async (user) => {
+      const roleNameResponse = await fetch(`${baseURL}roles/${user.id_rol}`);
+>>>>>>> nicolas-cartellone
       const role = await roleNameResponse.json();
 
       // Crear una nueva fila
@@ -96,7 +107,11 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     try {
+<<<<<<< HEAD
       const response = await fetch("http://localhost:3000/usuarios/", {
+=======
+      const response = await fetch(`${baseURL}usuarios/`, {
+>>>>>>> nicolas-cartellone
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -118,7 +133,11 @@ document.addEventListener("DOMContentLoaded", function () {
   // Función para crear el usuario
   const eliminarUsuario = async (userId) => {
     try {
+<<<<<<< HEAD
       const response = await fetch(`http://localhost:3000/usuarios/${userId}`, {
+=======
+      const response = await fetch(`${baseURL}usuarios/${userId}`, {
+>>>>>>> nicolas-cartellone
         method: "DELETE",
       });
 
@@ -139,13 +158,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const formData = new FormData(form);
 
     const usuarioActualizado = {
-        nombre: formData.get("nombre"),
-        apellido: formData.get("apellido"),
-        email: formData.get("email"),
-        id_rol: parseInt(formData.get("rol-usuario")) // Convertir a número entero
+      nombre: formData.get("nombre"),
+      apellido: formData.get("apellido"),
+      email: formData.get("email"),
+      id_rol: parseInt(formData.get("rol-usuario")) // Convertir a número entero
     };
 
     try {
+<<<<<<< HEAD
         const response = await fetch(`http://localhost:3000/usuarios/${userId}`, {
             method: "PUT",
             headers: {
@@ -153,21 +173,31 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             body: JSON.stringify(usuarioActualizado)
         });
+=======
+      const response = await fetch(`${baseURL}usuarios/${userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(usuarioActualizado)
+      });
+>>>>>>> nicolas-cartellone
 
-        if (!response.ok) {
-            throw new Error("Error al actualizar usuario");
-        }
+      if (!response.ok) {
+        throw new Error("Error al actualizar usuario");
+      }
 
-        // Actualizar la tabla de usuarios después de actualizar
-        getUsers();
+      // Actualizar la tabla de usuarios después de actualizar
+      getUsers();
+      form.reset();
     } catch (error) {
-        console.error("Error:", error);
-        // Manejar el error según tu necesidad (por ejemplo, mostrar un mensaje al usuario)
+      console.error("Error:", error);
+      // Manejar el error según tu necesidad (por ejemplo, mostrar un mensaje al usuario)
     }
-};
+  };
 
   // Función para crear el botón y modal de Usuarios
-  const createBtnOpenModalUsuarios = () => {
+  const createBtnOpenModalUsuarios = async () => {
     const btnOpenModal = document.getElementById("btn-open-modal");
     btnOpenModal.innerHTML = `
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-usuario">
@@ -180,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5">Crear Usuario</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button id="btn-header-close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <!-- Aquí va el formulario para crear usuario -->
@@ -211,21 +241,70 @@ document.addEventListener("DOMContentLoaded", function () {
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button id="btn-close-modal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <button type="button" class="btn btn-success" id="btn-guardar-usuario">Guardar</button>
                         </div>
                     </div>
                 </div>
             </div>
         `;
-    loadRolesOptions();
+
+    const btnCloseModal = document.getElementById("btn-close-modal");
+    btnCloseModal.addEventListener("click", () => {
+      const form = document.getElementById("form-crear-usuario");
+      form.reset()
+      const btnGuardar = document.getElementById("btn-guardar-usuario");
+      btnGuardar.innerHTML = "Guardar";
+      btnGuardar.removeEventListener("click", actualizarUsuario);
+    })
+
+    const btnHeaderClose = document.getElementById("btn-header-close");
+    btnHeaderClose.addEventListener("click", () => {
+      const form = document.getElementById("form-crear-usuario");
+      form.reset()
+      const btnGuardar = document.getElementById("btn-guardar-usuario");
+      btnGuardar.innerHTML = "Guardar";
+      btnGuardar.removeEventListener("click", actualizarUsuario);
+    })
+
+    // Obtener roles y actualizar el select
+    try {
+      const response = await fetch(`${baseURL}roles`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      if (!response.ok) {
+        throw new Error("Error al obtener los roles");
+      }
+      const roles = await response.json();
+      const selectRoles = document.getElementById("rol-usuario");
+      selectRoles.innerHTML = ''; // Limpiar opciones anteriores
+      roles.forEach(role => {
+        const option = document.createElement('option');
+        option.value = role.id; // Asegúrate de tener el ID del rol
+        option.textContent = role.nombre;
+        selectRoles.appendChild(option);
+      });
+    } catch (error) {
+      console.error("Error:", error);
+      // Manejar el error según tu necesidad (por ejemplo, mostrar un mensaje al usuario)
+    }
+
 
     const btnSaveUsuario = document.getElementById("btn-guardar-usuario");
     btnSaveUsuario.addEventListener("click", crearUsuario);
+
+
   };
 
   const mostrarModalActualizar = async (user) => {
-    const modalUsuario = new bootstrap.Modal(document.getElementById("modal-usuario"));
+    const modalUsuario = new bootstrap.Modal(document.getElementById("modal-usuario"),
+      {
+        backdrop: 'static',
+        keyboard: false
+      });
     modalUsuario.show();
 
     // Rellenar el formulario con los datos del usuario a actualizar
@@ -242,6 +321,7 @@ document.addEventListener("DOMContentLoaded", function () {
     btnGuardar.innerHTML = "Actualizar";
     btnGuardar.removeEventListener("click", crearUsuario); // Remover el EventListener anterior
     btnGuardar.addEventListener("click", () => {
+<<<<<<< HEAD
         actualizarUsuario(user.id);
     });
 };
@@ -259,6 +339,10 @@ document.addEventListener("DOMContentLoaded", function () {
       option.text = rol.nombre;
 
       selectRol.appendChild(option);
+=======
+      actualizarUsuario(user.id);
+      modalUsuario.hide();
+>>>>>>> nicolas-cartellone
     });
   };
 

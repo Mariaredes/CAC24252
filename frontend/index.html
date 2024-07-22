@@ -12,7 +12,7 @@
   <script src="https://kit.fontawesome.com/c9b87a4bee.js" crossorigin="anonymous"></script>
   <script src="./js/script.js" defer></script>
   <script src="./js/formulario.js" defer></script>
-
+  <script src="./js/logout.js" defer></script>
   <title>E-commerce</title>
 </head>
 
@@ -44,18 +44,13 @@
       <div class="button">
         <!-- Botón "Mi cuenta" con menú desplegable -->
         <div class="btn-navbar">
-            <i class="fas fa-user"></i> Mi cuenta
-            <div class="dropdown-content">
-                <a href="login.html">Iniciar sesión</a>
-                <a href="register.html">Crear cuenta</a>
+            <i class="fas fa-user"></i> <span id="btn-account-text"></span>
+            <div id="btn-account" class="dropdown-content">
+                
             </div>
         </div>
-
-        <!-- Botón "Mi carrito" -->
-        <div class="btn-navbar">
-          <i class="fas fa-shopping-cart"></i> Mi carrito
-        </div>
       </div>  
+
     </nav>
   </header>
 
@@ -111,10 +106,6 @@
         <h2 id="titulo-modal"></h2>
         <p id="descripcion-modal"></p>
         <div class="container-modal-button">
-          <div id="btn-comprar">
-            Comprar
-          </div>
-
           <div id="btn-cerrar">
             Cerrar
           </div>
