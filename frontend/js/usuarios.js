@@ -30,12 +30,23 @@ document.addEventListener("DOMContentLoaded", function () {
     newTable.appendChild(table);
 
     // Obtener usuarios
+<<<<<<< HEAD
+    const response = await fetch("http://localhost:3000/usuarios");
+    const users = await response.json();
+
+    // Iterar sobre cada usuario y agregarlos como filas a la tabla
+    users.forEach(async (user) => {
+      const roleNameResponse = await fetch(
+        `http://localhost:3000/roles/${user.id_rol}`
+      );
+=======
     const responseUsuarios = await fetch(`${baseURL}usuarios`);
     const users = await responseUsuarios.json();
 
     // Iterar sobre cada usuario y agregarlos como filas a la tabla
     users.forEach(async (user) => {
       const roleNameResponse = await fetch(`${baseURL}roles/${user.id_rol}`);
+>>>>>>> nicolas-cartellone
       const role = await roleNameResponse.json();
 
       // Crear una nueva fila
@@ -96,7 +107,11 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     try {
+<<<<<<< HEAD
+      const response = await fetch("http://localhost:3000/usuarios/", {
+=======
       const response = await fetch(`${baseURL}usuarios/`, {
+>>>>>>> nicolas-cartellone
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -118,7 +133,11 @@ document.addEventListener("DOMContentLoaded", function () {
   // Función para crear el usuario
   const eliminarUsuario = async (userId) => {
     try {
+<<<<<<< HEAD
+      const response = await fetch(`http://localhost:3000/usuarios/${userId}`, {
+=======
       const response = await fetch(`${baseURL}usuarios/${userId}`, {
+>>>>>>> nicolas-cartellone
         method: "DELETE",
       });
 
@@ -146,6 +165,15 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     try {
+<<<<<<< HEAD
+        const response = await fetch(`http://localhost:3000/usuarios/${userId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(usuarioActualizado)
+        });
+=======
       const response = await fetch(`${baseURL}usuarios/${userId}`, {
         method: "PUT",
         headers: {
@@ -153,6 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         body: JSON.stringify(usuarioActualizado)
       });
+>>>>>>> nicolas-cartellone
 
       if (!response.ok) {
         throw new Error("Error al actualizar usuario");
@@ -292,8 +321,28 @@ document.addEventListener("DOMContentLoaded", function () {
     btnGuardar.innerHTML = "Actualizar";
     btnGuardar.removeEventListener("click", crearUsuario); // Remover el EventListener anterior
     btnGuardar.addEventListener("click", () => {
+<<<<<<< HEAD
+        actualizarUsuario(user.id);
+    });
+};
+
+  const loadRolesOptions = async () => {
+    const selectRol = document.getElementById("rol-usuario");
+    selectRol.innerHTML = "";
+
+    const responnse = await fetch("http://localhost:3000/roles");
+    const roles = await responnse.json();
+
+    roles.forEach((rol) => {
+      const option = document.createElement("option");
+      option.value = rol.id;
+      option.text = rol.nombre;
+
+      selectRol.appendChild(option);
+=======
       actualizarUsuario(user.id);
       modalUsuario.hide();
+>>>>>>> nicolas-cartellone
     });
   };
 

@@ -29,7 +29,11 @@ document.addEventListener("DOMContentLoaded", function () {
         newTable.appendChild(table);
 
         // Obtener roles
+<<<<<<< HEAD
+        const response = await fetch('http://localhost:3000/roles');
+=======
         const response = await fetch(`${baseURL}roles`);
+>>>>>>> nicolas-cartellone
         const roles = await response.json();
 
         // Iterar sobre cada rol y agregarlos como filas a la tabla
